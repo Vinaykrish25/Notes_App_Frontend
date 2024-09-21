@@ -1,0 +1,60 @@
+.sidebar-container{
+    display: flex;
+    padding: 15px;
+    flex-direction: column;
+    gap: 40px;
+    background-color: #ffff;
+    box-shadow: 1px 1px 2px 2px gray;
+    height: 80vh;
+    width: 250px;
+}
+
+.sidebar-container a{
+    text-decoration: none;
+    color: black;
+}
+
+.notes{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    cursor: pointer;
+    padding: 8px;
+    transition:   background-color 0.3s ease;
+    border-radius: 20px;
+}
+
+.notes:hover{
+    background-color: #82beef;
+    border-radius: 20px;
+}
+
+.archived{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    cursor: pointer;
+    padding: 8px;
+    transition:   background-color 0.3s ease;
+    border-radius: 20px;
+}
+
+.archived:hover{
+    background-color: #82beef;
+    border-radius: 20px;
+}
+
+.deleted{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    cursor: pointer;
+    padding: 8px;
+    transition:   background-color 0.3s ease;
+    border-radius: 20px;
+}
+
+.deleted:hover{
+    background-color: #82beef;
+    border-radius: 20px;
+}

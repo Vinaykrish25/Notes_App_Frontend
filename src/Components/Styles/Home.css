@@ -1,0 +1,56 @@
+.home-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #82beef;
+    height: 100vh;
+    gap: 30px;
+}
+
+.home-heading{
+    font-size: 25px;
+}
+
+.two-buttons{
+    display: flex;
+    gap: 50px;
+}
+
+.two-buttons .home-login{
+    width: 200px;
+    height: 40px;
+    font-size: 18px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.two-buttons .home-signup{
+    width: 200px;
+    height: 40px;
+    font-size: 18px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.home-login{
+    background-color: rgb(52, 52, 211);
+    color: aliceblue;
+}
+
+.home-signup{
+    background-color: aliceblue;
+    color: rgb(52, 52, 211);
+}
+
+a{
+    text-decoration: none;
+}

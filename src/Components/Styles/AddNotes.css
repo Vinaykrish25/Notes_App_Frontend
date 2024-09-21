@@ -1,0 +1,82 @@
+.addnotes-container{
+    display: flex;
+    justify-content: center;
+    padding-top: 12px;
+}
+
+.addnotes{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    box-shadow: 1px 1px 2px 2px rgb(77, 76, 76);
+    width: 570px;
+    padding: 5px;
+    border-radius: 12px;
+}
+
+.addnotes table {
+    width: 100%; /* Optional: make table full-width */
+}
+
+.addnotes td {
+    display: flex;
+    flex-direction: column; /* Stack inputs vertically */
+}
+
+.input-title{
+    margin-bottom: 10px; /* Add spacing between inputs */
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    height: 40px;
+    font-size: 20px;
+    color: black;
+}
+
+.input-content {
+    margin-bottom: 10px; /* Add spacing between inputs */
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    height: 70px;
+    font-size: 15px;
+    color: black;
+}
+
+.input-title::placeholder{
+    font-size: 20px;
+    color: black;
+}
+
+.input-content::placeholder{
+    font-size: 15px;
+    color: black;
+}
+
+#addnotes-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+#addnotes-buttons #add{
+    padding: 10px 20px;
+    cursor: pointer;
+    border: none;
+    border-radius: 12px;
+    background-color: #2196F3;
+}
+
+#addnotes-buttons #close{
+    padding: 10px 20px;
+    cursor: pointer;
+    border: none;
+    border-radius: 12px;
+    background-color: #2196F3;
+}
