@@ -1,8 +1,9 @@
-// Signup.js
 import React, { useState } from 'react';
 import './Styles/SignUp.css';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
+import Loading from './Loading'; // Import the Loading component
+import Api from './Api';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const SignUp = () => {
   const [data, setData] = useState({
@@ -12,22 +13,22 @@ const SignUp = () => {
     confirmpassword: '',
   });
 
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const [err, setErr] = useState("");
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState("");
 
   // Validation Regex
   const userVal = /^[0-9A-Za-z]{5,20}$/;
   const emailVal = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  const passwordVal = /^[a-zA-Z0-9!@#$%^&*]{8}$/;
+  const passwordVal = /^[a-zA-Z0-9!@#$%^&*]{8,}$/;
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const handleRegister = async (e) => {
     e.preventDefault(); // Prevent default form submission
-
-    // Clear previous errors and success messages
-    setErr("");
-    setSuccess("");
 
     // Basic validation
     if (!userVal.test(data.username)) {
@@ -41,7 +42,7 @@ const SignUp = () => {
     }
 
     if (!passwordVal.test(data.password)) {
-      setErr("Password must be 8 characters and can include letters, numbers, and !@#$%^&*.");
+      setErr("Password must be 8 characters and include letters, numbers, or !@#$%^&*.");
       return;
     }
 
@@ -50,20 +51,23 @@ const SignUp = () => {
       return;
     }
 
-    setLoading(true); // Start loading
+    setLoading(true); // Start loading only if all validations pass
+    setErr(""); // Clear previous errors
 
     try {
-      const response = await axios.post(
-        "http://localhost:5000/users/register",
+      const response = await Api.post(
+        "/users/register",
         data,
         { withCredentials: true }
       );
       console.log(response.data);
-      setSuccess("Registration successful! Redirecting to login...");
-      // Redirect after a short delay to show success message
-      setTimeout(() => {
-        navigate("/login");
-      }, 2000);
+
+      setErr("Registered Successfully! Please log in.");
+      setLoading(false); // End loading
+
+      // Navigate to login page
+      navigate('/login');
+
     } catch (error) {
       if (error.response && error.response.data && error.response.data.message) {
         setErr(error.response.data.message); // Display specific error from server
@@ -71,75 +75,118 @@ const SignUp = () => {
         setErr("Error registering user. Please try again.");
       }
       console.error(error);
-    } finally {
-      setLoading(false); // End loading
+      setLoading(false); // Stop loading in case of an error
     }
   };
 
+  // Show the loading component while loading is true
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
-    <div className="signup-container">
-      <center><h2>Sign Up</h2></center>
-      
-      {err && <p className="error-message">{err}</p>}
-      {success && <p className="success-message">{success}</p>}
-      
-      <form onSubmit={handleRegister}>
-        <div className="form-group">
-          <label htmlFor="username">Username:</label>
-          <input
-            id="username"
-            value={data.username}
-            onChange={(e) => setData({ ...data, username: e.target.value })}
-            type="text"
-            name="username"
-            placeholder="Enter your username"
-            required
-          />
-        </div>
+    <div className='signup-page'>
+      <div className="signup-container">
+        <center><h2>Sign Up</h2></center>
+        <br />
+        {err && (
+          <p
+            className="error-message"
+            style={{ textAlign: "center", color: err.includes("Successfully") ? "green" : "red" }}
+          >
+            {err}
+          </p>
+        )}
+        <br />
+        <form onSubmit={handleRegister}>
+          <div className="form-group">
+            <label htmlFor="username">Username:</label>
+            <input
+              id="username"
+              value={data.username}
+              onChange={(e) => setData({ ...data, username: e.target.value })}
+              type="text"
+              name="username"
+              placeholder="Enter your username"
+              required
+              disabled={loading} // Disable inputs when loading
+            />
+          </div>
 
-        <div className="form-group">
-          <label htmlFor="email">Email:</label>
-          <input
-            id="email"
-            value={data.email}
-            onChange={(e) => setData({ ...data, email: e.target.value })}
-            type="email"
-            name="email"
-            placeholder="Enter your email"
-            required
-          />
-        </div>
+          <div className="form-group">
+            <label htmlFor="email">Email:</label>
+            <input
+              id="email"
+              value={data.email}
+              onChange={(e) => setData({ ...data, email: e.target.value })}
+              type="email" // Changed type to 'email' for better validation
+              name="email"
+              placeholder="Enter your email"
+              required
+              disabled={loading} // Disable inputs when loading
+            />
+          </div>
 
-        <div className="form-group">
-          <label htmlFor="password">Password:</label>
-          <input
-            id="password"
-            value={data.password}
-            onChange={(e) => setData({ ...data, password: e.target.value })}
-            type="password"
-            name="password"
-            placeholder="Enter your password"
-            required
-          />
-        </div>
+          {/* Password Field with Toggle Button */}
+          <div className="form-group password-group">
+            <label htmlFor="password">Password:</label>
+            <div className="password-input-container">
+              <input
+                id="password"
+                value={data.password}
+                onChange={(e) => setData({ ...data, password: e.target.value })}
+                type={showPassword ? 'text' : 'password'}
+                name="password"
+                placeholder="Enter your password"
+                required
+                disabled={loading} // Disable inputs when loading
+              />
+              <button
+                type="button"
+                className="password-toggle-button"
+                onClick={togglePasswordVisibility}
+                disabled={loading}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
+          </div>
 
-        <div className="form-group">
-          <label htmlFor="confirmpassword">Confirm Password:</label>
-          <input
-            id="confirmpassword"
-            value={data.confirmpassword}
-            onChange={(e) => setData({ ...data, confirmpassword: e.target.value })}
-            type="password"
-            name="confirmpassword"
-            placeholder="Confirm your password"
-            required
-          />
-        </div>
+          {/* Confirm Password Field with Toggle Button */}
+          <div className="form-group password-group">
+            <label htmlFor="confirmpassword">Confirm Password:</label>
+            <div className="password-input-container">
+              <input
+                id="confirmpassword"
+                value={data.confirmpassword}
+                onChange={(e) => setData({ ...data, confirmpassword: e.target.value })}
+                type={showPassword ? 'text' : 'password'}
+                name="confirmpassword"
+                placeholder="Confirm your password"
+                required
+                disabled={loading} // Disable inputs when loading
+              />
+              <button
+                type="button"
+                className="password-toggle-button"
+                onClick={togglePasswordVisibility}
+                disabled={loading}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
+          </div>
 
-        <button type="submit" disabled={loading} id="register">
-          {loading ? "Registering..." : "Sign Up"}
-        </button>
-      </form>
+          <div className="sig-but">
+            <button type="submit" disabled={loading} id="register">
+              Sign Up
+            </button>
+            <Link to="/login"><h4>◀ Login</h4></Link>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

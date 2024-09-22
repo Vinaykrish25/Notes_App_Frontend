@@ -27,6 +27,15 @@
     font-family: 'Times New Roman', Times, serif;
     font-weight: 600;
     letter-spacing: 1px;
+    transition: box-shadow 0.5s ease;
+}
+
+.two-buttons .home-login:hover{
+    box-shadow: 1px 1px 3px 3px rgb(77, 76, 76);
+}
+
+.two-buttons .home-signup:hover{
+    box-shadow: 1px 1px 3px 3px rgb(77, 76, 76);
 }
 
 .two-buttons .home-signup{
@@ -39,6 +48,7 @@
     font-family: 'Times New Roman', Times, serif;
     font-weight: 600;
     letter-spacing: 1px;
+    transition: box-shadow 0.5s ease;
 }
 
 .home-login{

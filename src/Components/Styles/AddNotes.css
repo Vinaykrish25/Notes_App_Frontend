@@ -1,82 +1,78 @@
-.addnotes-container{
-    display: flex;
-    justify-content: center;
-    padding-top: 12px;
+/* AddNotes.css */
+.addnotes-container {
+  margin-bottom: 20px; /* Ensures space below the AddNotes component */
 }
 
-.addnotes{
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    box-shadow: 1px 1px 2px 2px rgb(77, 76, 76);
-    width: 570px;
-    padding: 5px;
-    border-radius: 12px;
+.addnotes {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 5px;
 }
 
-.addnotes table {
-    width: 100%; /* Optional: make table full-width */
+.addnotes h2 {
+  margin-bottom: 10px;
 }
 
-.addnotes td {
-    display: flex;
-    flex-direction: column; /* Stack inputs vertically */
-}
-
-.input-title{
-    margin-bottom: 10px; /* Add spacing between inputs */
-    padding: 10px;
-    width: 100%;
-    box-sizing: border-box;
-    border-radius: 10px;
-    outline: none;
-    border: none;
-    height: 40px;
-    font-size: 20px;
-    color: black;
+.input-title,
+.input-content {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+  box-sizing: border-box;
 }
 
 .input-content {
-    margin-bottom: 10px; /* Add spacing between inputs */
-    padding: 10px;
-    width: 100%;
-    box-sizing: border-box;
-    border-radius: 10px;
-    outline: none;
-    border: none;
-    height: 70px;
-    font-size: 15px;
-    color: black;
-}
-
-.input-title::placeholder{
-    font-size: 20px;
-    color: black;
-}
-
-.input-content::placeholder{
-    font-size: 15px;
-    color: black;
+  height: 100px;
+  resize: vertical;
 }
 
 #addnotes-buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
 }
 
-#addnotes-buttons #add{
-    padding: 10px 20px;
-    cursor: pointer;
-    border: none;
-    border-radius: 12px;
-    background-color: #2196F3;
+#add-note-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-#addnotes-buttons #close{
-    padding: 10px 20px;
-    cursor: pointer;
-    border: none;
-    border-radius: 12px;
-    background-color: #2196F3;
+#add-note-button:hover {
+  background-color: #0056b3;
+}
+
+#add,
+#close {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#add {
+  background-color: #28a745;
+  color: white;
+}
+
+#add:hover {
+  background-color: #218838;
+}
+
+#close {
+  background-color: #dc3545;
+  color: white;
+}
+
+#close:hover {
+  background-color: #c82333;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
 }
