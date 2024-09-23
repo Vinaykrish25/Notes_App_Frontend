@@ -1,4 +1,3 @@
-// App.js
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./Components/Layouts/Layout";
 import { AppContext } from "./Components/Context/AppContext";
@@ -15,6 +14,7 @@ function App() {
   const [isOpen, setIsOpen] = useState(false);
   const [error, setError] = useState(""); // To handle fetch errors
   const [currentNote, setCurrentNote] = useState(null); // Note being edited
+  const [searchQuery, setSearchQuery] = useState(""); // New search state
 
   // Function to toggle sidebar visibility
   function toggleSideBar() {
@@ -25,7 +25,7 @@ function App() {
   async function fetchNotes() {
     try {
       const response = await Api.get("/notes/", {}, { withCredentials: true });
-      setNotes(response.data.data); // Adjust based on your API response structure
+      setNotes(response.data.data); 
       setError("");
     } catch (err) {
       console.error("Error in fetching notes", err);
@@ -115,6 +115,8 @@ function App() {
           currentNote,
           error,
           fetchNotes, // Provide fetchNotes in case other components need to refresh notes
+          searchQuery, // Provide searchQuery
+          setSearchQuery, // Provide setSearchQuery
         }}
       >
         <BrowserRouter>

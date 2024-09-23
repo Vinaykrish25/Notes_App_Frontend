@@ -1,23 +1,43 @@
-// Notes.js
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import "./Styles/Notes.css";
 import { AppContext } from './Context/AppContext';
+import ConfirmDelete from './ConfirmDelete';
 
 const Notes = () => {
-  const { notes, deleteNote, editNote, error } = useContext(AppContext);
+  const { notes, deleteNote, editNote, error, searchQuery } = useContext(AppContext);
+  const deleteRef = useRef();
+  const [noteToDelete, setNoteToDelete] = useState(null); // Track the note to delete
 
-  // Handle delete button click with confirmation
+  // Handle delete button click, open confirmation dialog
   const handleDelete = (noteId) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this note?");
-    if (confirmDelete) {
-      deleteNote(noteId);
+    setNoteToDelete(noteId); // Save the note ID to delete
+    deleteRef.current.showModal(); // Show confirmation modal
+  };
+
+  // Handle confirmation delete
+  const confirmDelete = () => {
+    if (noteToDelete) {
+      deleteNote(noteToDelete); // Perform delete
+      setNoteToDelete(null); // Clear the noteToDelete after deletion
+      deleteRef.current.close(); // Close the modal
     }
+  };
+
+  // Close the modal without deleting
+  const cancelDelete = () => {
+    setNoteToDelete(null); // Reset the note to delete
+    deleteRef.current.close(); // Close the modal
   };
 
   // Handle edit button click
   const handleEdit = (note) => {
     editNote(note);
   };
+
+  // Filter notes based on searchQuery
+  const filteredNotes = notes.filter(note =>
+    note.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   if (error) {
     return (
@@ -27,13 +47,17 @@ const Notes = () => {
     );
   }
 
-  if (notes.length === 0) {
-    return null; // No notes to display, Background will handle the empty state
+  if (filteredNotes.length === 0) {
+    return (
+      <div className='notes-container'>
+        <h3 className="no-notes-message">No notes found.</h3>
+      </div>
+    );
   }
 
   return (
     <div className='notes-container'>
-      {notes.map((note) => (
+      {filteredNotes.map((note) => (
         <div key={note.id} className="note-card">
           <div className="note-header">
             <h2>{note.title}</h2>
@@ -45,10 +69,18 @@ const Notes = () => {
           <div className="note-content">
             <p>{note.content}</p>
           </div>
+          <br />
+          <hr />
+          <br />
+          <div className="createdBy">
+            <h5>Created By: <span style={{fontWeight: "lighter", color: "red"}}>{note.createdBy}</span></h5>
+            <h5>Date: <span style={{fontWeight: "lighter", color: "green"}}>{note.createdDate}</span> and Time: <span style={{fontWeight: "lighter", color: "green"}}>{note.createdTime}</span></h5>
+          </div>
         </div>
       ))}
+      <ConfirmDelete ref={deleteRef} confirmDelete={confirmDelete} cancelDelete={cancelDelete} />
     </div>
   );
-}
+};
 
 export default Notes;

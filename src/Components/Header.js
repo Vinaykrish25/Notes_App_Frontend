@@ -1,14 +1,20 @@
-import React, { useContext } from 'react'
-import logo from "../Assets/notes.png"
+import React, { useContext, useEffect, useState } from 'react';
+import logo from "../Assets/notes.png";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoSearch } from "react-icons/io5";
-import "./Styles/Header.css"
+import "./Styles/Header.css";
 import { AppContext } from './Context/AppContext';
-
+import { FaUserCircle } from "react-icons/fa";
+import Api from "./Api"
 
 const Header = () => {
+    const { toggleSideBar, searchQuery, setSearchQuery, notes } = useContext(AppContext);
 
-    const {toggleSideBar} = useContext(AppContext)
+    // Handle input change
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+    };
+
     return (
         <div className='header-container'>
             <div className="menu-icon">
@@ -19,7 +25,12 @@ const Header = () => {
                 <h2>Notes</h2>
             </div>
             <div className="search-bar">
-                <input type="search" placeholder='Search' />
+                <input
+                    type="search"
+                    placeholder='Search by title...'
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                />
                 <h2><IoSearch /></h2>
             </div>
             <div className='header-toggle'>
@@ -28,12 +39,8 @@ const Header = () => {
                     <span className="slider round"></span>
                 </label>
             </div>
-            <div className="profile">
-                <p>Name</p>
-                <img src="" alt=""  width={50} height={50}/>
-            </div>
         </div>
-    )
+    );
 }
 
-export default Header
+export default Header;

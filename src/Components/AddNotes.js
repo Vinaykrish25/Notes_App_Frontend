@@ -1,4 +1,3 @@
-// AddNotes.js
 import React, { useContext, useState, useEffect } from 'react';
 import "./Styles/AddNotes.css";
 import { AppContext } from './Context/AppContext';

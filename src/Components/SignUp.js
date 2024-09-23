@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Styles/SignUp.css';
 import { Link, useNavigate } from 'react-router-dom';
-import Loading from './Loading'; // Import the Loading component
+import Loading from './Loading';
 import Api from './Api';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
@@ -28,7 +28,7 @@ const SignUp = () => {
   };
 
   const handleRegister = async (e) => {
-    e.preventDefault(); // Prevent default form submission
+    e.preventDefault();
 
     // Basic validation
     if (!userVal.test(data.username)) {
@@ -51,8 +51,8 @@ const SignUp = () => {
       return;
     }
 
-    setLoading(true); // Start loading only if all validations pass
-    setErr(""); // Clear previous errors
+    setLoading(true); 
+    setErr("");
 
     try {
       const response = await Api.post(
@@ -63,19 +63,19 @@ const SignUp = () => {
       console.log(response.data);
 
       setErr("Registered Successfully! Please log in.");
-      setLoading(false); // End loading
+      setLoading(false); 
 
       // Navigate to login page
       navigate('/login');
 
     } catch (error) {
       if (error.response && error.response.data && error.response.data.message) {
-        setErr(error.response.data.message); // Display specific error from server
+        setErr(error.response.data.message); 
       } else {
         setErr("Error registering user. Please try again.");
       }
       console.error(error);
-      setLoading(false); // Stop loading in case of an error
+      setLoading(false); 
     }
   };
 
@@ -109,7 +109,7 @@ const SignUp = () => {
               name="username"
               placeholder="Enter your username"
               required
-              disabled={loading} // Disable inputs when loading
+              disabled={loading} 
             />
           </div>
 
@@ -119,7 +119,7 @@ const SignUp = () => {
               id="email"
               value={data.email}
               onChange={(e) => setData({ ...data, email: e.target.value })}
-              type="email" // Changed type to 'email' for better validation
+              type="text" 
               name="email"
               placeholder="Enter your email"
               required
@@ -139,7 +139,7 @@ const SignUp = () => {
                 name="password"
                 placeholder="Enter your password"
                 required
-                disabled={loading} // Disable inputs when loading
+                disabled={loading} 
               />
               <button
                 type="button"
@@ -165,7 +165,7 @@ const SignUp = () => {
                 name="confirmpassword"
                 placeholder="Confirm your password"
                 required
-                disabled={loading} // Disable inputs when loading
+                disabled={loading} 
               />
               <button
                 type="button"
