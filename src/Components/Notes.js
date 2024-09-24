@@ -73,8 +73,8 @@ const Notes = () => {
           <hr />
           <br />
           <div className="createdBy">
-            <h5>Created By: <span style={{fontWeight: "lighter", color: "red"}}>{note.createdBy}</span></h5>
-            <h5>Date: <span style={{fontWeight: "lighter", color: "green"}}>{note.createdDate}</span> and Time: <span style={{fontWeight: "lighter", color: "green"}}>{note.createdTime}</span></h5>
+            <h5 style={{fontWeight: "lighter"}}>Created By: <span style={{fontWeight: "lighter", color: "red"}}>{note.createdBy}</span></h5>
+            <h5 style={{fontWeight: "lighter"}}>Date: <span style={{fontWeight: "lighter", color: "green"}}>{note.createdDate}</span> and Time: <span style={{fontWeight: "lighter", color: "green"}}>{note.createdTime}</span></h5>
           </div>
         </div>
       ))}
