@@ -24,7 +24,7 @@ function App() {
   // Function to fetch notes from API
   async function fetchNotes() {
     try {
-      const response = await axios.get("https://notes-app-backend-five-gold.vercel.app/notes/", {}, { withCredentials: true });
+      const response = await axios.get("https://notes-app-backend-five-gold.vercel.app/notes/", { withCredentials: true });
       setNotes(response.data.data); 
       setError("");
     } catch (err) {
@@ -63,7 +63,7 @@ function App() {
   async function deleteNote(noteId) {
     try {
       await axios.delete(`https://notes-app-backend-five-gold.vercel.app/notes/${noteId}`, { withCredentials: true });
-      setNotes(notes.filter(note => note.id !== noteId));
+      setNotes(notes.filter(note => note._id !== noteId));
       setError("");
     } catch (err) {
       console.error("Error in deleting note", err);
@@ -85,7 +85,7 @@ function App() {
   async function updateNote(updatedNoteData) {
     try {
       const response = await axios.patch(`https://notes-app-backend-five-gold.vercel.app/notes/${updatedNoteData.id}`, updatedNoteData, { withCredentials: true });
-      setNotes(notes.map(note => (note.id === updatedNoteData.id ? response.data.data : note)));
+      setNotes(notes.map(note => (note._id === updatedNoteData._id ? response.data.data : note)));
       setIsOpen(false); // Close the AddNotes form after updating
       setCurrentNote(null);
       setError("");
