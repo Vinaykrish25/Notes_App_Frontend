@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Loading from './Loading';
 import Api from './Api';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import axios from 'axios';
 
 const SignUp = () => {
   const [data, setData] = useState({
@@ -55,8 +56,8 @@ const SignUp = () => {
     setErr("");
 
     try {
-      const response = await Api.post(
-        "/users/register",
+      const response = await axios.post(
+        "https://notes-app-backend-theta.vercel.app/users/register",
         data,
         { withCredentials: true }
       );

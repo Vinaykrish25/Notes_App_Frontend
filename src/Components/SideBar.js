@@ -6,6 +6,7 @@ import { TiUserAdd } from "react-icons/ti";
 import { FaRegTrashAlt } from "react-icons/fa";
 import "./Styles/SideBar.css"
 import Api from './Api';
+import axios from 'axios';
 
 const SideBar = () => {
 
@@ -13,7 +14,7 @@ const SideBar = () => {
 
   const handleLogout = async () => {
       try {
-          const response = await Api.post('/users/logout', {}, { withCredentials: true });
+          const response = await axios.post('https://notes-app-backend-theta.vercel.app/users/logout', {}, { withCredentials: true });
           navigate('/'); 
           console.log(response)
       } catch (err) {

@@ -6,7 +6,7 @@ import Home from "./Components/Home";
 import Login from "./Components/Login";
 import SignUp from "./Components/SignUp";
 import ProtectedRoute from "./Components/ProtectedRoute";
-import Api from "./Components/Api"; // Ensure Api is correctly imported
+import axios from "axios"; // Ensure Api is correctly imported
 
 function App() {
   const [isSideBarVisible, setSideBarVisible] = useState(false);
@@ -24,7 +24,7 @@ function App() {
   // Function to fetch notes from API
   async function fetchNotes() {
     try {
-      const response = await Api.get("/notes/", {}, { withCredentials: true });
+      const response = await axios.get("https://notes-app-backend-theta.vercel.app/notes/", {}, { withCredentials: true });
       setNotes(response.data.data); 
       setError("");
     } catch (err) {
@@ -45,8 +45,8 @@ function App() {
   // Function to add a new note
   async function addNote(newNoteData) {
     try {
-      const createdNote = await Api.post("/notes/", newNoteData, { withCredentials: true });
-      setNotes([...notes, createdNote.data.data]); // Adjust based on your API response structure
+      const createdNote = await axios.post("https://notes-app-backend-theta.vercel.app/notes/", newNoteData, { withCredentials: true });
+      setNotes([...notes, createdNote.data.data]); // Adjust based on your axios response structure
       setIsOpen(false); // Close the AddNotes form after adding
       setError("");
     } catch (err) {
@@ -62,7 +62,7 @@ function App() {
   // Function to delete a note
   async function deleteNote(noteId) {
     try {
-      await Api.delete(`/notes/${noteId}`, { withCredentials: true });
+      await axios.delete(`https://notes-app-backend-theta.vercel.app/notes/${noteId}`, { withCredentials: true });
       setNotes(notes.filter(note => note.id !== noteId));
       setError("");
     } catch (err) {
@@ -84,7 +84,7 @@ function App() {
   // Function to update an existing note
   async function updateNote(updatedNoteData) {
     try {
-      const response = await Api.patch(`/notes/${updatedNoteData.id}`, updatedNoteData, { withCredentials: true });
+      const response = await axios.patch(`https://notes-app-backend-theta.vercel.app/notes/${updatedNoteData.id}`, updatedNoteData, { withCredentials: true });
       setNotes(notes.map(note => (note.id === updatedNoteData.id ? response.data.data : note)));
       setIsOpen(false); // Close the AddNotes form after updating
       setCurrentNote(null);

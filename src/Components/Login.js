@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Api from './Api';
 import Loading from "../Components/Loading";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import axios from 'axios';
 
 const Login = () => {
   const [data, setData] = useState({
@@ -58,7 +59,7 @@ const Login = () => {
   useEffect(() => {
     const verifyUser = async () => {
       try {
-        const response = await Api.post('/users/verify', {}, { withCredentials: true });
+        const response = await axios.post('https://notes-app-backend-theta.vercel.app/users/verify', {}, { withCredentials: true });
         if (response.status === 200) {
           setIsAuthenticated(true);
           navigate('/notes');
