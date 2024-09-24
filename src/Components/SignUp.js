@@ -57,7 +57,7 @@ const SignUp = () => {
 
     try {
       const response = await axios.post(
-        "https://notes-app-backend-theta.vercel.app/users/register",
+        "https://notes-app-backend-five-gold.vercel.app/users/register",
         data,
         { withCredentials: true }
       );

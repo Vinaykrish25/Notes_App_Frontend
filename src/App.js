@@ -24,7 +24,7 @@ function App() {
   // Function to fetch notes from API
   async function fetchNotes() {
     try {
-      const response = await axios.get("https://notes-app-backend-theta.vercel.app/notes/", {}, { withCredentials: true });
+      const response = await axios.get("https://notes-app-backend-five-gold.vercel.app/notes/", {}, { withCredentials: true });
       setNotes(response.data.data); 
       setError("");
     } catch (err) {
@@ -45,7 +45,7 @@ function App() {
   // Function to add a new note
   async function addNote(newNoteData) {
     try {
-      const createdNote = await axios.post("https://notes-app-backend-theta.vercel.app/notes/", newNoteData, { withCredentials: true });
+      const createdNote = await axios.post("https://notes-app-backend-five-gold.vercel.app/notes/", newNoteData, { withCredentials: true });
       setNotes([...notes, createdNote.data.data]); // Adjust based on your axios response structure
       setIsOpen(false); // Close the AddNotes form after adding
       setError("");
@@ -62,7 +62,7 @@ function App() {
   // Function to delete a note
   async function deleteNote(noteId) {
     try {
-      await axios.delete(`https://notes-app-backend-theta.vercel.app/notes/${noteId}`, { withCredentials: true });
+      await axios.delete(`https://notes-app-backend-five-gold.vercel.app/notes/${noteId}`, { withCredentials: true });
       setNotes(notes.filter(note => note.id !== noteId));
       setError("");
     } catch (err) {
@@ -84,7 +84,7 @@ function App() {
   // Function to update an existing note
   async function updateNote(updatedNoteData) {
     try {
-      const response = await axios.patch(`https://notes-app-backend-theta.vercel.app/notes/${updatedNoteData.id}`, updatedNoteData, { withCredentials: true });
+      const response = await axios.patch(`https://notes-app-backend-five-gold.vercel.app/notes/${updatedNoteData.id}`, updatedNoteData, { withCredentials: true });
       setNotes(notes.map(note => (note.id === updatedNoteData.id ? response.data.data : note)));
       setIsOpen(false); // Close the AddNotes form after updating
       setCurrentNote(null);
