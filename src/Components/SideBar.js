@@ -14,7 +14,8 @@ const SideBar = () => {
 
   const handleLogout = async () => {
       try {
-          const response = await axios.post('https://notes-app-backend-five-gold.vercel.app/users/logout', {}, { withCredentials: true });
+          // const response = await axios.post('https://notes-app-backend-five-gold.vercel.app/users/logout', {}, { withCredentials: true });
+          const response = await Api.post('/users/logout', {}, { withCredentials: true });
           navigate('/'); 
           console.log(response)
       } catch (err) {

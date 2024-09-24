@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const Api = axios.create({
-    baseURL: 'https://notes-app-backend-theta.vercel.app/',
+    baseURL: 'http://localhost:5000',
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json',
