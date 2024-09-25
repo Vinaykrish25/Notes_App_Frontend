@@ -32,8 +32,8 @@ const Login = () => {
 
     setLoading(true); // Start loading spinner when form is submitted
     try {
-      // const response = await axios.post(`https://notes-app-backend-five-gold.vercel.app/users/login`, data, { withCredentials: true });
-      const response = await Api.post(`/users/login`, data, { withCredentials: true });
+      const response = await axios.post(`https://notes-app-backend-five-gold.vercel.app/users/login`, data, { withCredentials: true });
+      // const response = await Api.post(`/users/login`, data, { withCredentials: true });
       console.log(response.data);
       setErr("Login Successful✅");
       setSuccess(true); // Set success to true to show the success message
@@ -60,8 +60,8 @@ const Login = () => {
   useEffect(() => {
     const verifyUser = async () => {
       try {
-        // const response = await axios.post('https://notes-app-backend-five-gold.vercel.app/users/verify', {}, { withCredentials: true });
-        const response = await Api.post('/users/verify', {}, { withCredentials: true });
+        const response = await axios.post('https://notes-app-backend-five-gold.vercel.app/users/verify', {}, { withCredentials: true });
+        // const response = await Api.post('/users/verify', {}, { withCredentials: true });
         if (response.status === 200) {
           setIsAuthenticated(true);
           navigate('/notes');

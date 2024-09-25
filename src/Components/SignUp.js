@@ -56,10 +56,10 @@ const SignUp = () => {
     setErr("");
 
     try {
-      // const response = await axios.post(
-      //   "https://notes-app-backend-five-gold.vercel.app/users/register",
-      const response = await Api.post(
-        "/users/register",
+      const response = await axios.post(
+        "https://notes-app-backend-five-gold.vercel.app/users/register",
+      // const response = await Api.post(
+      //   "/users/register",
         data,
         { withCredentials: true }
       );

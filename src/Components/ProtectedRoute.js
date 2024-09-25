@@ -10,8 +10,8 @@ const ProtectedRoute = ({ children }) => {
   useEffect(() => {
     const verifyAuth = async () => {
       try {
-        // const response = await axios.post('https://notes-app-backend-five-gold.vercel.app/users/verify', {}, { withCredentials: true });
-        const response = await Api.post('/users/verify', {}, { withCredentials: true });
+        const response = await axios.post('https://notes-app-backend-five-gold.vercel.app/users/verify', {}, { withCredentials: true });
+        // const response = await Api.post('/users/verify', {}, { withCredentials: true });
         if (response.status === 200) {
           setIsAuthenticated(true);
         }
