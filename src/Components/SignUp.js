@@ -59,7 +59,7 @@ const SignUp = () => {
       // const response = await axios.post(
       //   "https://notes-app-backend-five-gold.vercel.app/users/register",
       const response = await Api.post(
-        "/users/register",
+        `/users/register`,
         data,
         { withCredentials: true }
       );

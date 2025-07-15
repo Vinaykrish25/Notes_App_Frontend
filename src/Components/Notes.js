@@ -1,10 +1,11 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from "react";
 import "./Styles/Notes.css";
-import { AppContext } from './Context/AppContext';
-import ConfirmDelete from './ConfirmDelete';
+import { AppContext } from "./Context/AppContext";
+import ConfirmDelete from "./ConfirmDelete";
 
 const Notes = () => {
-  const { notes, deleteNote, editNote, error, searchQuery } = useContext(AppContext);
+  const { notes, deleteNote, editNote, error, searchQuery } =
+    useContext(AppContext);
   const deleteRef = useRef();
   const [noteToDelete, setNoteToDelete] = useState(null); // Track the note to delete
 
@@ -35,13 +36,13 @@ const Notes = () => {
   };
 
   // Filter notes based on searchQuery
-  const filteredNotes = notes.filter(note =>
+  const filteredNotes = notes.filter((note) =>
     note.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   if (error) {
     return (
-      <div className='notes-container'>
+      <div className="notes-container">
         <p className="error-message">{error}</p>
       </div>
     );
@@ -49,21 +50,28 @@ const Notes = () => {
 
   if (filteredNotes.length === 0) {
     return (
-      <div className='notes-container'>
+      <div className="notes-container">
         <h3 className="no-notes-message">No notes found.</h3>
       </div>
     );
   }
 
   return (
-    <div className='notes-container'>
+    <div className="notes-container">
       {filteredNotes.map((note) => (
         <div key={note.id} className="note-card">
           <div className="note-header">
             <h2>{note.title}</h2>
             <div className="notes-buttons">
-              <button className='edit-button' onClick={() => handleEdit(note)}>Edit</button>
-              <button className='delete-button' onClick={() => handleDelete(note.id)}>Delete</button>
+              <button className="edit-button" onClick={() => handleEdit(note)}>
+                Edit
+              </button>
+              <button
+                className="delete-button"
+                onClick={() => handleDelete(note._id)}
+              >
+                Delete
+              </button>
             </div>
           </div>
           <div className="note-content">
@@ -73,12 +81,30 @@ const Notes = () => {
           <hr />
           <br />
           <div className="createdBy">
-            <h5 style={{fontWeight: "lighter"}}>Created By: <span style={{fontWeight: "lighter", color: "red"}}>{note.createdBy}</span></h5>
-            <h5 style={{fontWeight: "lighter"}}>Date: <span style={{fontWeight: "lighter", color: "green"}}>{note.createdDate}</span> and Time: <span style={{fontWeight: "lighter", color: "green"}}>{note.createdTime}</span></h5>
+            <h5 style={{ fontWeight: "lighter" }}>
+              Created By:{" "}
+              <span style={{ fontWeight: "lighter", color: "red" }}>
+                {note.createdBy}
+              </span>
+            </h5>
+            <h5 style={{ fontWeight: "lighter" }}>
+              Date:{" "}
+              <span style={{ fontWeight: "lighter", color: "green" }}>
+                {note.createdDate}
+              </span>{" "}
+              and Time:{" "}
+              <span style={{ fontWeight: "lighter", color: "green" }}>
+                {note.createdTime}
+              </span>
+            </h5>
           </div>
         </div>
       ))}
-      <ConfirmDelete ref={deleteRef} confirmDelete={confirmDelete} cancelDelete={cancelDelete} />
+      <ConfirmDelete
+        ref={deleteRef}
+        confirmDelete={confirmDelete}
+        cancelDelete={cancelDelete}
+      />
     </div>
   );
 };

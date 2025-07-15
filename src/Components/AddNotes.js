@@ -37,7 +37,7 @@ const AddNotes = () => {
 
     if (currentNote) {
       // Update existing note
-      await updateNote({ ...data, id: currentNote.id });
+      await updateNote({ ...data, id: currentNote._id });
     } else {
       // Add new note
       await addNote(data);

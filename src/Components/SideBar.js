@@ -6,7 +6,6 @@ import { TiUserAdd } from "react-icons/ti";
 import { FaRegTrashAlt } from "react-icons/fa";
 import "./Styles/SideBar.css";
 import Api from "./Api";
-import axios from "axios";
 
 const SideBar = () => {
   const navigate = useNavigate();
