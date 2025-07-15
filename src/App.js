@@ -10,98 +10,78 @@ import Api from "./Components/Api";
 
 function App() {
   const [isSideBarVisible, setSideBarVisible] = useState(false);
-  const [notes, setNotes] = useState([]); // Initialize as an empty array
+  const [notes, setNotes] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
-  const [error, setError] = useState(""); // To handle fetch errors
-  const [currentNote, setCurrentNote] = useState(null); // Note being edited
-  const [searchQuery, setSearchQuery] = useState(""); // New search state
+  const [error, setError] = useState("");
+  const [currentNote, setCurrentNote] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  // Function to toggle sidebar visibility
-  function toggleSideBar() {
-    setSideBarVisible(!isSideBarVisible);
-  }
+  const toggleSideBar = () => setSideBarVisible(!isSideBarVisible);
 
-  // Function to fetch notes from API
-  async function fetchNotes() {
+  // ✅ Fetch notes from API
+  const fetchNotes = async () => {
     try {
-      // const response = await axios.get("https://notes-app-backend-five-gold.vercel.app/", { withCredentials: true });
-      const response = await Api.get("/notes/", { withCredentials: true });
-      setNotes(response.data.data); 
+      const response = await Api.get("/notes/");
+      setNotes(response.data.data);
       setError("");
     } catch (err) {
       console.error("Error in fetching notes", err);
-      if (err.response && err.response.data && err.response.data.message) {
-        setError(err.response.data.message);
-      } else {
-        setError("Failed to fetch notes. Please try again.");
-      }
+      setError(err?.response?.data?.message || "Failed to fetch notes. Please try again.");
     }
-  }
+  };
 
-  // Fetch notes on component mount
   useEffect(() => {
     fetchNotes();
   }, []);
 
-  // Function to add a new note
-  async function addNote(newNoteData) {
+  // ✅ Add a new note
+  const addNote = async (newNoteData) => {
     try {
-      // const createdNote = await axios.post("https://notes-app-backend-five-gold.vercel.app/notes/", newNoteData, { withCredentials: true });
-      const createdNote = await Api.post("/notes/", newNoteData, { withCredentials: true });
-      setNotes([...notes, createdNote.data.data]); // Adjust based on your axios response structure
-      setIsOpen(false); // Close the AddNotes form after adding
+      const response = await Api.post("/notes/", newNoteData);
+      const createdNote = response.data.data;
+      setNotes((prev) => [...prev, createdNote]);
+      setIsOpen(false);
       setError("");
     } catch (err) {
       console.error("Error in creating note", err);
-      if (err.response && err.response.data && err.response.data.message) {
-        setError(err.response.data.message);
-      } else {
-        setError("Error in creating note. Please try again.");
-      }
+      setError(err?.response?.data?.message || "Error in creating note. Please try again.");
     }
-  }
+  };
 
-  // Function to delete a note
-  async function deleteNote(noteId) {
+  // ✅ Delete a note
+  const deleteNote = async (noteId) => {
     try {
-      // await axios.delete(`https://notes-app-backend-five-gold.vercel.app/notes/${noteId}`, { withCredentials: true });
-      await Api.delete(`/notes/${noteId}`, { withCredentials: true });
-      setNotes(notes.filter(note => note._id !== noteId));
+      await Api.delete(`/notes/${noteId}`);
+      setNotes((prev) => prev.filter((note) => note._id !== noteId));
       setError("");
     } catch (err) {
       console.error("Error in deleting note", err);
-      if (err.response && err.response.data && err.response.data.message) {
-        setError(err.response.data.message);
-      } else {
-        setError("Error in deleting note. Please try again.");
-      }
+      setError(err?.response?.data?.message || "Error in deleting note. Please try again.");
     }
-  }
+  };
 
-  // Function to set the current note for editing
-  function editNote(note) {
+  // ✅ Prepare note for editing
+  const editNote = (note) => {
     setCurrentNote(note);
-    setIsOpen(true); // Open the AddNotes form in edit mode
-  }
+    setIsOpen(true);
+  };
 
-  // Function to update an existing note
-  async function updateNote(updatedNoteData) {
+  // ✅ Update a note
+  const updateNote = async (updatedNoteData) => {
     try {
-      // const response = await axios.patch(`https://notes-app-backend-five-gold.vercel.app/notes/${updatedNoteData.id}`, updatedNoteData, { withCredentials: true });
-      const response = await Api.patch(`/notes/${updatedNoteData._id}`, updatedNoteData, { withCredentials: true });
-      setNotes(notes.map(note => (note._id === updatedNoteData._id ? response.data.data : note)));
-      setIsOpen(false); // Close the AddNotes form after updating
+      const response = await Api.patch(`/notes/${updatedNoteData._id}`, updatedNoteData);
+      const updated = response.data.data;
+      setNotes((prev) =>
+        prev.map((note) => (note._id === updated._id ? updated : note))
+      );
+      setIsOpen(false);
       setCurrentNote(null);
       setError("");
     } catch (err) {
       console.error("Error in updating note", err);
-      if (err.response && err.response.data && err.response.data.message) {
-        setError(err.response.data.message);
-      } else {
-        setError("Error in updating note. Please try again.");
-      }
+      setError(err?.response?.data?.message || "Error in updating note. Please try again.");
     }
-  }
+  };
 
   return (
     <div className="App">
@@ -118,9 +98,9 @@ function App() {
           setIsOpen,
           currentNote,
           error,
-          fetchNotes, // Provide fetchNotes in case other components need to refresh notes
-          searchQuery, // Provide searchQuery
-          setSearchQuery, // Provide setSearchQuery
+          fetchNotes,
+          searchQuery,
+          setSearchQuery,
         }}
       >
         <BrowserRouter>
