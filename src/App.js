@@ -6,7 +6,6 @@ import Home from "./Components/Home";
 import Login from "./Components/Login";
 import SignUp from "./Components/SignUp";
 import ProtectedRoute from "./Components/ProtectedRoute";
-import axios from "axios"; // Ensure Api is correctly imported
 import Api from "./Components/Api";
 
 function App() {
@@ -89,7 +88,7 @@ function App() {
   async function updateNote(updatedNoteData) {
     try {
       // const response = await axios.patch(`https://notes-app-backend-five-gold.vercel.app/notes/${updatedNoteData.id}`, updatedNoteData, { withCredentials: true });
-      const response = await Api.patch(`/notes/${updatedNoteData.id}`, updatedNoteData, { withCredentials: true });
+      const response = await Api.patch(`/notes/${updatedNoteData._id}`, updatedNoteData, { withCredentials: true });
       setNotes(notes.map(note => (note._id === updatedNoteData._id ? response.data.data : note)));
       setIsOpen(false); // Close the AddNotes form after updating
       setCurrentNote(null);
