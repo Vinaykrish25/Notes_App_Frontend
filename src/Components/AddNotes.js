@@ -29,17 +29,14 @@ const AddNotes = () => {
   const handleSubmit = async () => {
     if (data.title.trim() === "" || data.content.trim() === "") {
       setErr("Both Title and Content are required.");
-      setTimeout(() => {
-        setErr("")
-      },2000)
+      setTimeout(() => setErr(""), 2000);
       return;
     }
 
     if (currentNote) {
-      // Update existing note
+      // ✅ Fixed: Pass _id, not id
       await updateNote({ ...data, _id: currentNote._id });
     } else {
-      // Add new note
       await addNote(data);
     }
 
@@ -47,7 +44,7 @@ const AddNotes = () => {
     setData({ title: "", content: "" });
   };
 
-  // Handle form cancellation
+  // Handle cancel
   const handleCancel = () => {
     setIsOpen(false);
   };
@@ -55,7 +52,7 @@ const AddNotes = () => {
   return (
     <div className='addnotes-container'>
       <div className="addnotes">
-        <p style={{textAlign: "center", color: " red", fontWeight: "bold"}}>{err}</p>
+        <p style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>{err}</p>
         <br />
         {isOpen ? (
           <div>
@@ -63,7 +60,6 @@ const AddNotes = () => {
             <table>
               <tbody>
                 <tr>
-                  {/* Merging both inputs into one <td> */}
                   <td>
                     <input
                       type="text"
@@ -83,7 +79,9 @@ const AddNotes = () => {
               </tbody>
             </table>
             <div id='addnotes-buttons'>
-              <button id='add' onClick={handleSubmit}>{currentNote ? "Update" : "Add"}</button>
+              <button id='add' onClick={handleSubmit}>
+                {currentNote ? "Update" : "Add"}
+              </button>
               <button id='close' onClick={handleCancel}>Cancel</button>
             </div>
           </div>
@@ -93,6 +91,6 @@ const AddNotes = () => {
       </div>
     </div>
   );
-}
+};
 
 export default AddNotes;

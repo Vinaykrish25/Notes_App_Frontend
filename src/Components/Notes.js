@@ -4,38 +4,37 @@ import { AppContext } from "./Context/AppContext";
 import ConfirmDelete from "./ConfirmDelete";
 
 const Notes = () => {
-  const { notes, deleteNote, editNote, error, searchQuery } =
-    useContext(AppContext);
+  const { notes, deleteNote, editNote, error, searchQuery } = useContext(AppContext);
   const deleteRef = useRef();
-  const [noteToDelete, setNoteToDelete] = useState(null); // Track the note to delete
+  const [noteToDelete, setNoteToDelete] = useState(null);
 
-  // Handle delete button click, open confirmation dialog
+  // Open confirmation dialog
   const handleDelete = (noteId) => {
-    setNoteToDelete(noteId); // Save the note ID to delete
-    deleteRef.current.showModal(); // Show confirmation modal
+    setNoteToDelete(noteId);
+    deleteRef.current.showModal();
   };
 
-  // Handle confirmation delete
+  // Confirm deletion
   const confirmDelete = () => {
     if (noteToDelete) {
-      deleteNote(noteToDelete); // Perform delete
-      setNoteToDelete(null); // Clear the noteToDelete after deletion
-      deleteRef.current.close(); // Close the modal
+      deleteNote(noteToDelete);
+      setNoteToDelete(null);
+      deleteRef.current.close();
     }
   };
 
-  // Close the modal without deleting
+  // Cancel deletion
   const cancelDelete = () => {
-    setNoteToDelete(null); // Reset the note to delete
-    deleteRef.current.close(); // Close the modal
+    setNoteToDelete(null);
+    deleteRef.current.close();
   };
 
-  // Handle edit button click
+  // Edit handler
   const handleEdit = (note) => {
     editNote(note);
   };
 
-  // Filter notes based on searchQuery
+  // Filter by search
   const filteredNotes = notes.filter((note) =>
     note.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
