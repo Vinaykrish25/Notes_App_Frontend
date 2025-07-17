@@ -3,6 +3,8 @@
 
 # 📝 Notes App – Frontend (React)
 
+🔗 **Live Demo:** [Notes App](https://notes-app-frontend-l6mi.vercel.app/)
+
 This is the **frontend** of a full-stack Notes Application, built using **React.js**. It connects to a backend RESTful API (Node.js + Express + MongoDB) to allow users to manage their personal notes with authentication, dynamic UI updates, and a responsive layout.
 
 ---
